@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review Analyzer</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#fafafa;color:#111}
+.container{max-width:800px;margin:24px auto;padding:16px}
+.card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+input[type="password"]{flex:1;min-width:220px;padding:10px 12px;border:1px solid #ddd;border-radius:10px}
+button{padding:10px 14px;border:1px solid #ddd;background:#fff;border-radius:10px;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #eee;background:#f7f7f7;font-size:12px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+.label{font-size:12px;color:#666}
+#review{white-space:pre-wrap;font-size:15px;line-height:1.4}
+#err{color:#b00020;margin-top:10px;min-height:20px}
+#spinner{display:none}
+.center{display:flex;align-items:center;gap:8px}
+.kpi{display:flex;gap:10px;align-items:center}
+.kpi span{font-size:28px}
+.small{font-size:12px;color:#888}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card grid">
+<div class="row">
+<input id="token" type="password" placeholder="Optional: Hugging Face API token">
+<button id="btn-rand"><i class="fa-solid fa-shuffle"></i> Select Random Review</button>
+<button id="btn-sent"><i class="fa-regular fa-face-smile"></i> Analyze Sentiment</button>
+<button id="btn-nouns"><i class="fa-regular fa-file-lines"></i> Count Nouns</button>
+<button id="btn-recheck" class="hidden"><i class="fa-solid fa-rotate-right"></i> Re-check</button>
+<div id="spinner" class="center"><i class="fa-solid fa-spinner fa-spin"></i> Loading</div>
+</div>
+<div class="grid card">
+<div class="label">Review</div>
+<div id="review"></div>
+</div>
+<div class="card">
+<div class="kpi"><div class="label">Sentiment</div><span id="sent-emoji">—</span><span id="sent-text" class="badge">n/a</span></div>
+<div class="kpi"><div class="label">Noun level</div><span id="noun-emoji">—</span><span id="noun-text" class="badge">n/a</span><span id="mismatch" class="badge hidden">⚠️ mismatch</span></div>
+<div class="small">Model: Qwen/Qwen2.5-3B-Instruct via Hugging Face Inference</div>
+</div>
+<div id="err"></div>
+</div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
